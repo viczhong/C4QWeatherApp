@@ -9,15 +9,18 @@
 import UIKit
 
 class WeatherTableViewController: UITableViewController {
-    
-    // MARK: Properties and Loads
+    // MARK: Properties and Outlets
     let weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9"
     let reuseIdentifier = "weatherReuseID"
     var forecast = [Weather]()
+    var tempToggle = true
+    @IBOutlet weak var tempToggleButton: UIBarButtonItem!
     
+    @IBAction func tempToggleButtonPressed(_ sender: UIBarButtonItem) {
+        toggleTempButtonPressed()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         getTheWeather()
     }
     
@@ -49,6 +52,18 @@ class WeatherTableViewController: UITableViewController {
         }
     }
     
+    func toggleTempButtonPressed() {
+        tempToggle = !tempToggle
+
+        if tempToggle {
+            tempToggleButton.title = "🔄℉"
+        } else {
+            tempToggleButton.title = "🔄℃"
+        }
+        
+        self.tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,7 +79,15 @@ class WeatherTableViewController: UITableViewController {
         
         let forecastAtRow = forecast[indexPath.row]
         cell.imageView?.image = UIImage(named: forecastAtRow.icon)
-        cell.textLabel?.text = "\(dateStringToReadableString(forecastAtRow.date)): High: \(forecastAtRow.maxTemp)℉, Low: \(forecastAtRow.minTemp)℉"
+        var cellText = String()
+        
+        if tempToggle {
+            cellText = "\(dateStringToReadableString(forecastAtRow.date)): High: \(forecastAtRow.maxTempF)℉, Low: \(forecastAtRow.minTempF)℉"
+        } else {
+            cellText = "\(dateStringToReadableString(forecastAtRow.date)): High: \(forecastAtRow.maxTempC)℃, Low: \(forecastAtRow.minTempC)℃"
+        }
+        
+        cell.textLabel?.text = cellText
         
         return cell
     }

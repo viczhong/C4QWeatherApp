@@ -14,30 +14,40 @@ enum WeatherModelParseError: Error {
 
 class Weather {
     let date: String
-    let minTemp: Int
-    let maxTemp: Int
+    let minTempF: Int
+    let maxTempF: Int
+    let minTempC: Int
+    let maxTempC: Int
     let icon: String
     
     init(date: String,
-         minTemp: Int,
-         maxTemp: Int,
+         minTempF: Int,
+         maxTempF: Int,
+         minTempC: Int,
+         maxTempC: Int,
          icon: String)
     {
         self.date = date
-        self.maxTemp = maxTemp
-        self.minTemp = minTemp
+        self.maxTempF = maxTempF
+        self.minTempF = minTempF
+        self.maxTempC = maxTempC
+        self.minTempC = minTempC
         self.icon = icon
     }
     
     convenience init?(from dict: [String : Any]) throws {
         guard let dateTimeISO = dict["dateTimeISO"] as? String,
-            let maxTemp = dict["maxTempF"] as? Int,
-            let minTemp = dict["minTempF"] as? Int,
+            let maxTempF = dict["maxTempF"] as? Int,
+            let minTempF = dict["minTempF"] as? Int,
+            let maxTempC = dict["maxTempC"] as? Int,
+            let minTempC = dict["minTempC"] as? Int,
             let icon = dict["icon"] as? String else { throw WeatherModelParseError.parsing }
         
         self.init(date: dateTimeISO,
-                  minTemp: minTemp,
-                  maxTemp: maxTemp,
+                  minTempF: minTempF,
+                  maxTempF: maxTempF,
+                  minTempC: minTempC,
+                  maxTempC: maxTempC,
                   icon: icon)
     }
     

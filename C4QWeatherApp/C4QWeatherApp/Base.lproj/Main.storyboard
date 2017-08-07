@@ -32,7 +32,16 @@
                             <outlet property="delegate" destination="yHC-lw-vBF" id="LIr-hq-vBD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Bgu-dJ-3nt"/>
+                    <navigationItem key="navigationItem" id="Bgu-dJ-3nt">
+                        <barButtonItem key="rightBarButtonItem" title="🔄℉" id="Zsy-nu-kRz">
+                            <connections>
+                                <action selector="tempToggleButtonPressed:" destination="yHC-lw-vBF" id="bk7-So-Awd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tempToggleButton" destination="Zsy-nu-kRz" id="I7f-h8-LMp"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CVI-Vc-cUu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
