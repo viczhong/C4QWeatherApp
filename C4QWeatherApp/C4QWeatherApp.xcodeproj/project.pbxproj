@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		9E2247211F38F26600F60AD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2247201F38F26600F60AD7 /* AppDelegate.swift */; };
-		9E2247231F38F26600F60AD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2247221F38F26600F60AD7 /* ViewController.swift */; };
 		9E2247261F38F26600F60AD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E2247241F38F26600F60AD7 /* Main.storyboard */; };
 		9E2247281F38F26600F60AD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E2247271F38F26600F60AD7 /* Assets.xcassets */; };
 		9E22472B1F38F26600F60AD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E2247291F38F26600F60AD7 /* LaunchScreen.storyboard */; };
+		9E2247331F38F49400F60AD7 /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2247321F38F49400F60AD7 /* APIRequestManager.swift */; };
+		9E2247391F38F57100F60AD7 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2247381F38F57100F60AD7 /* Weather.swift */; };
+		9E22473B1F38F84F00F60AD7 /* WeatherTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22473A1F38F84F00F60AD7 /* WeatherTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9E22471D1F38F26600F60AD7 /* C4QWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C4QWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E2247201F38F26600F60AD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9E2247221F38F26600F60AD7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9E2247251F38F26600F60AD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9E2247271F38F26600F60AD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E22472A1F38F26600F60AD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E22472C1F38F26600F60AD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9E2247321F38F49400F60AD7 /* APIRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestManager.swift; sourceTree = "<group>"; };
+		9E2247381F38F57100F60AD7 /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		9E22473A1F38F84F00F60AD7 /* WeatherTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,48 @@
 		9E22471F1F38F26600F60AD7 /* C4QWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				9E2247371F38F55F00F60AD7 /* Models */,
+				9E2247351F38F4A200F60AD7 /* View Controllers */,
+				9E2247341F38F49B00F60AD7 /* Managers */,
+				9E2247361F38F4B600F60AD7 /* Supporting Files */,
+			);
+			path = C4QWeatherApp;
+			sourceTree = "<group>";
+		};
+		9E2247341F38F49B00F60AD7 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9E2247321F38F49400F60AD7 /* APIRequestManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		9E2247351F38F4A200F60AD7 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9E22473A1F38F84F00F60AD7 /* WeatherTableViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		9E2247361F38F4B600F60AD7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				9E2247201F38F26600F60AD7 /* AppDelegate.swift */,
-				9E2247221F38F26600F60AD7 /* ViewController.swift */,
 				9E2247241F38F26600F60AD7 /* Main.storyboard */,
 				9E2247271F38F26600F60AD7 /* Assets.xcassets */,
 				9E2247291F38F26600F60AD7 /* LaunchScreen.storyboard */,
 				9E22472C1F38F26600F60AD7 /* Info.plist */,
 			);
-			path = C4QWeatherApp;
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9E2247371F38F55F00F60AD7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9E2247381F38F57100F60AD7 /* Weather.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +175,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E2247231F38F26600F60AD7 /* ViewController.swift in Sources */,
+				9E2247391F38F57100F60AD7 /* Weather.swift in Sources */,
+				9E22473B1F38F84F00F60AD7 /* WeatherTableViewController.swift in Sources */,
+				9E2247331F38F49400F60AD7 /* APIRequestManager.swift in Sources */,
 				9E2247211F38F26600F60AD7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +344,7 @@
 				9E2247311F38F26600F60AD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
