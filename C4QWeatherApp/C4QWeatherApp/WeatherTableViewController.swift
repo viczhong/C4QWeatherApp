@@ -8,29 +8,41 @@
 
 import UIKit
 
-class WeatherTableViewController: UITableViewController {
+class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
     // MARK: Properties and Outlets
-    let weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9"
+    @IBOutlet weak var zipCodeField: UITextField!
+    var zipCode = "11101"
+    var validZip = Bool()
+    var weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9"
     let reuseIdentifier = "weatherReuseID"
     var forecast = [Weather]()
     var tempToggle = true
     @IBOutlet weak var tempToggleButton: UIBarButtonItem!
-    
     @IBAction func tempToggleButtonPressed(_ sender: UIBarButtonItem) {
         toggleTempButtonPressed()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getTheWeather()
+        zipCodeField.delegate = self
+        getTheWeather(for: zipCode)
     }
     
     // MARK: Functions and Methods
-    func getTheWeather() {
-        APIRequestManager.manager.getData(endPoint: weatherAPIURL) { (data: Data?) in
+    func getTheWeather(for zipCode: String) {
+        APIRequestManager.manager.getData(endPoint: "http://api.aerisapi.com/forecasts/\(zipCode)?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9") { (data: Data?) in
             if let validData = data, let validWeather = Weather.getWeather(from: validData) {
-                self.forecast = validWeather
+                self.forecast = validWeather.0!
+                self.validZip = validWeather.1!
+                
                 DispatchQueue.main.async {
+                    if !self.validZip {
+                        let alertController = UIAlertController(title: "Error", message: "\(zipCode) is not a valid zip code!", preferredStyle: .alert)
+                        
+                        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                    
                     self.tableView.reloadData()
                 }
             }
@@ -55,7 +67,7 @@ class WeatherTableViewController: UITableViewController {
     
     func toggleTempButtonPressed() {
         tempToggle = !tempToggle
-
+        
         if tempToggle {
             tempToggleButton.title = "🔄℉"
         } else {
@@ -63,6 +75,17 @@ class WeatherTableViewController: UITableViewController {
         }
         
         self.tableView.reloadData()
+    }
+    
+    // MARK: - UITextField Stuff
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let search = textField.text {
+            zipCode = search
+            getTheWeather(for: search)
+        }
+        
+        textField.resignFirstResponder()
+        return true
     }
     
     // MARK: - Table view data source
@@ -85,14 +108,4 @@ class WeatherTableViewController: UITableViewController {
         
         return cell
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
 }

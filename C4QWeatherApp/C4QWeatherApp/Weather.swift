@@ -51,9 +51,9 @@ class Weather {
                   icon: icon)
     }
     
-    static func getWeather(from data: Data) -> [Weather]? {
+    static func getWeather(from data: Data) -> ([Weather]?, Bool?)? {
         var weatherToReturn: [Weather]? = []
-        
+        var successBool: Bool?
         do {
             let jsonData: Any = try JSONSerialization.jsonObject(with: data, options: [])
             
@@ -62,8 +62,13 @@ class Weather {
                     throw WeatherModelParseError.results
             }
             
-            for response in responses {
+            if json["success"] as! Bool == true {
+                successBool = true
+            } else {
+                successBool = false
+            }
             
+            for response in responses {
                 guard let periods = response["periods"] as? [[String : Any]] else {
                     throw WeatherModelParseError.results
                 }
@@ -80,7 +85,7 @@ class Weather {
             print("Error encountered with \(error)")
         }
         
-        return weatherToReturn
+        return (weatherToReturn, successBool)
     }
 }
 
