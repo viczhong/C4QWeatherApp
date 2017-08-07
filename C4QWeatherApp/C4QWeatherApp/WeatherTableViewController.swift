@@ -19,6 +19,7 @@ class WeatherTableViewController: UITableViewController {
     @IBAction func tempToggleButtonPressed(_ sender: UIBarButtonItem) {
         toggleTempButtonPressed()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getTheWeather()
@@ -79,15 +80,8 @@ class WeatherTableViewController: UITableViewController {
         
         let forecastAtRow = forecast[indexPath.row]
         cell.imageView?.image = UIImage(named: forecastAtRow.icon)
-        var cellText = String()
-        
-        if tempToggle {
-            cellText = "\(dateStringToReadableString(forecastAtRow.date)): High: \(forecastAtRow.maxTempF)℉, Low: \(forecastAtRow.minTempF)℉"
-        } else {
-            cellText = "\(dateStringToReadableString(forecastAtRow.date)): High: \(forecastAtRow.maxTempC)℃, Low: \(forecastAtRow.minTempC)℃"
-        }
-        
-        cell.textLabel?.text = cellText
+        cell.detailTextLabel?.text = "\(dateStringToReadableString(forecastAtRow.date))"
+        cell.textLabel?.text = "High: \(tempToggle ? "\(forecastAtRow.maxTempF)℉" : "\(forecastAtRow.maxTempC)℃"), Low: \(tempToggle ? "\(forecastAtRow.minTempF)℉" : "\(forecastAtRow.minTempC)℃")"
         
         return cell
     }
