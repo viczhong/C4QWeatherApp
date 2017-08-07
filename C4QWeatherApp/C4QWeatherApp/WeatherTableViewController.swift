@@ -11,17 +11,14 @@ import UIKit
 class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
     // MARK: Properties and Outlets
     @IBOutlet weak var zipCodeField: UITextField!
+    @IBOutlet weak var tempToggleButton: UIBarButtonItem!
     var zipCode = "11101"
     var validZip = Bool()
     var weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9"
     let reuseIdentifier = "weatherReuseID"
     var forecast = [Weather]()
     var tempToggle = true
-    @IBOutlet weak var tempToggleButton: UIBarButtonItem!
-    @IBAction func tempToggleButtonPressed(_ sender: UIBarButtonItem) {
-        toggleTempButtonPressed()
-    }
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         zipCodeField.delegate = self
@@ -29,6 +26,10 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     // MARK: Functions and Methods
+    @IBAction func tempToggleButtonPressed(_ sender: UIBarButtonItem) {
+        toggleTempButtonPressed()
+    }
+    
     func getTheWeather(for zipCode: String) {
         APIRequestManager.manager.getData(endPoint: "http://api.aerisapi.com/forecasts/\(zipCode)?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9") { (data: Data?) in
             if let validData = data, let validWeather = Weather.getWeather(from: validData) {
@@ -51,7 +52,6 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
     
     func dateStringToReadableString(_ dateString: String) -> String {
         let dateFormatter = DateFormatter()
-        //"2017-08-07T07:00:00-04:00"
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let date = dateFormatter.date(from: dateString)
         

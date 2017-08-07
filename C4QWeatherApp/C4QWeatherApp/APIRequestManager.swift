@@ -1,5 +1,5 @@
 //
-//  ApiRequestManager.swift
+//  APIRequestManager.swift
 //  C4QWeatherApp
 //
 //  Created by Victor Zhong on 8/7/17.

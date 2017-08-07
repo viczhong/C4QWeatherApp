@@ -62,10 +62,8 @@ class Weather {
                     throw WeatherModelParseError.results
             }
             
-            if json["success"] as! Bool == true {
-                successBool = true
-            } else {
-                successBool = false
+            if let success = json["success"] as? Bool {
+                successBool = success
             }
             
             for response in responses {
