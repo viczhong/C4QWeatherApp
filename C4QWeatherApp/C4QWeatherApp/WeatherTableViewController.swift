@@ -38,16 +38,20 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
                 
                 DispatchQueue.main.async {
                     if !self.validZip {
-                        let alertController = UIAlertController(title: "Error", message: "\(zipCode) is not a valid zip code!", preferredStyle: .alert)
-                        
-                        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-                        self.present(alertController, animated: true, completion: nil)
+                        self.presentErrorMessage()
                     }
                     
                     self.tableView.reloadData()
                 }
             }
         }
+    }
+    
+    func presentErrorMessage() {
+        let alertController = UIAlertController(title: "Error", message: "\(zipCode) is not a valid zip code!", preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func dateStringToReadableString(_ dateString: String) -> String {
@@ -78,10 +82,19 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     // MARK: - UITextField Stuff
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let search = textField.text {
             zipCode = search
-            getTheWeather(for: search)
+            
+            if search.characters.count == 5 {
+                getTheWeather(for: search)
+            } else {
+                presentErrorMessage()
+            }
         }
         
         textField.resignFirstResponder()
