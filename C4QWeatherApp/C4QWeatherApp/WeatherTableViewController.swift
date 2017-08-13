@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
+class WeatherTableViewController: UITableViewController {
     // MARK: Properties and Outlets
     @IBOutlet weak var zipCodeField: UITextField!
     @IBOutlet weak var tempToggleButton: UIBarButtonItem!
@@ -18,7 +18,7 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
     let reuseIdentifier = "weatherReuseID"
     var forecast = [Weather]()
     var tempToggle = true
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         zipCodeField.delegate = self
@@ -35,12 +35,10 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
             if let validData = data, let validWeather = Weather.getWeather(from: validData) {
                 self.forecast = validWeather.0!
                 self.validZip = validWeather.1!
-                
                 DispatchQueue.main.async {
                     if !self.validZip {
                         self.presentErrorMessage()
                     }
-                    
                     self.tableView.reloadData()
                 }
             }
@@ -58,10 +56,8 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let date = dateFormatter.date(from: dateString)
-        
         let newFormatter = DateFormatter()
         newFormatter.dateFormat = "MMM d, yyyy"
-        
         if let date = date {
             return newFormatter.string(from: date)
         } else {
@@ -71,16 +67,33 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
     
     func toggleTempButtonPressed() {
         tempToggle = !tempToggle
-        
         if tempToggle {
             tempToggleButton.title = "🔄℉"
         } else {
             tempToggleButton.title = "🔄℃"
         }
-        
         self.tableView.reloadData()
     }
     
+    
+    // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return forecast.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        let forecastAtRow = forecast[indexPath.row]
+        cell.imageView?.image = UIImage(named: forecastAtRow.icon)
+        cell.detailTextLabel?.text = "\(dateStringToReadableString(forecastAtRow.date))"
+        cell.textLabel?.text = "High: \(tempToggle ? "\(forecastAtRow.maxTempF)℉" : "\(forecastAtRow.maxTempC)℃"), Low: \(tempToggle ? "\(forecastAtRow.minTempF)℉" : "\(forecastAtRow.minTempC)℃")"
+        return cell
+    }
+}
+
+
+extension WeatherTableViewController: UITextFieldDelegate {
     // MARK: - UITextField Stuff
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.text = ""
@@ -89,36 +102,13 @@ class WeatherTableViewController: UITableViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let search = textField.text {
             zipCode = search
-            
             if search.characters.count == 5 {
                 getTheWeather(for: search)
             } else {
                 presentErrorMessage()
             }
         }
-        
         textField.resignFirstResponder()
         return true
-    }
-    
-    // MARK: - Table view data source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forecast.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        
-        let forecastAtRow = forecast[indexPath.row]
-        cell.imageView?.image = UIImage(named: forecastAtRow.icon)
-        cell.detailTextLabel?.text = "\(dateStringToReadableString(forecastAtRow.date))"
-        cell.textLabel?.text = "High: \(tempToggle ? "\(forecastAtRow.maxTempF)℉" : "\(forecastAtRow.maxTempC)℃"), Low: \(tempToggle ? "\(forecastAtRow.minTempF)℉" : "\(forecastAtRow.minTempC)℃")"
-        
-        return cell
     }
 }
