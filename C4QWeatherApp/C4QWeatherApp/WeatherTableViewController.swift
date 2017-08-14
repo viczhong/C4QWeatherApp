@@ -12,6 +12,7 @@ class WeatherTableViewController: UITableViewController {
     // MARK: Properties and Outlets
     @IBOutlet weak var zipCodeField: UITextField!
     @IBOutlet weak var tempToggleButton: UIBarButtonItem!
+    
     var zipCode = "11101"
     var validZip = Bool()
     var weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9"
@@ -68,7 +69,6 @@ class WeatherTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,11 +76,12 @@ class WeatherTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! WeatherTableViewCell
         let forecastAtRow = forecast[indexPath.row]
-        cell.imageView?.image = UIImage(named: forecastAtRow.icon)
-        cell.detailTextLabel?.text = "\(dateStringToReadableString(forecastAtRow.date))"
-        cell.textLabel?.text = "High: \(tempToggle ? "\(forecastAtRow.maxTempF)℉" : "\(forecastAtRow.maxTempC)℃"), Low: \(tempToggle ? "\(forecastAtRow.minTempF)℉" : "\(forecastAtRow.minTempC)℃")"
+        cell.weatherIcon.image = UIImage(named: forecastAtRow.icon)
+        cell.dateLabel.text = "\(dateStringToReadableString(forecastAtRow.date))"
+        cell.weatherLabel.text = forecastAtRow.weather
+        cell.tempLabel.text = "High: \(tempToggle ? "\(forecastAtRow.maxTempF)℉" : "\(forecastAtRow.maxTempC)℃"), Low: \(tempToggle ? "\(forecastAtRow.minTempF)℉" : "\(forecastAtRow.minTempC)℃")"
         return cell
     }
     
@@ -100,12 +101,10 @@ extension WeatherTableViewController: SettingsDelegate {
             zipCode = zip
             getTheWeather(for: zip)
         }
-        
         if temp != tempToggle {
             tempToggle = temp
             checkTempToggleForButtonIcon()
         }
-        
         controller.dismiss(animated: true, completion: nil)
     }
 }

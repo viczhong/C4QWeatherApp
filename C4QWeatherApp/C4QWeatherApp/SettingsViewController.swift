@@ -70,5 +70,4 @@ extension SettingsViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-
 }

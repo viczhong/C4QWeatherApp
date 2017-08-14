@@ -19,13 +19,15 @@ class Weather {
     let minTempC: Int
     let maxTempC: Int
     let icon: String
+    let weather: String
     
     init(date: String,
          minTempF: Int,
          maxTempF: Int,
          minTempC: Int,
          maxTempC: Int,
-         icon: String)
+         icon: String,
+         weather: String)
     {
         self.date = date
         self.maxTempF = maxTempF
@@ -33,6 +35,7 @@ class Weather {
         self.maxTempC = maxTempC
         self.minTempC = minTempC
         self.icon = icon
+        self.weather = weather
     }
     
     convenience init?(from dict: [String : Any]) throws {
@@ -41,14 +44,16 @@ class Weather {
             let minTempF = dict["minTempF"] as? Int,
             let maxTempC = dict["maxTempC"] as? Int,
             let minTempC = dict["minTempC"] as? Int,
-            let icon = dict["icon"] as? String else { throw WeatherModelParseError.parsing }
+            let icon = dict["icon"] as? String,
+            let weather = dict["weather"] as? String else { throw WeatherModelParseError.parsing }
         
         self.init(date: dateTimeISO,
                   minTempF: minTempF,
                   maxTempF: maxTempF,
                   minTempC: minTempC,
                   maxTempC: maxTempC,
-                  icon: icon)
+                  icon: icon,
+                  weather: weather)
     }
     
     static func getWeather(from data: Data) -> ([Weather]?, Bool?)? {

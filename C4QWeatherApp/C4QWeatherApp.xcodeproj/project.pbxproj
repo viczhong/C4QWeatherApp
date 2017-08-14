@@ -16,6 +16,7 @@
 		9E2247391F38F57100F60AD7 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2247381F38F57100F60AD7 /* Weather.swift */; };
 		9E22473B1F38F84F00F60AD7 /* WeatherTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22473A1F38F84F00F60AD7 /* WeatherTableViewController.swift */; };
 		9E4D35521F423F1200186A6A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4D35511F423F1200186A6A /* Error.swift */; };
+		9E4D35541F42495C00186A6A /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4D35531F42495C00186A6A /* WeatherTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		9E2247381F38F57100F60AD7 /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		9E22473A1F38F84F00F60AD7 /* WeatherTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTableViewController.swift; sourceTree = "<group>"; };
 		9E4D35511F423F1200186A6A /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		9E4D35531F42495C00186A6A /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				9E22473A1F38F84F00F60AD7 /* WeatherTableViewController.swift */,
 				9E20A9411F415B39007212E9 /* SettingsViewController.swift */,
+				9E4D35531F42495C00186A6A /* WeatherTableViewCell.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 			files = (
 				9E2247391F38F57100F60AD7 /* Weather.swift in Sources */,
 				9E22473B1F38F84F00F60AD7 /* WeatherTableViewController.swift in Sources */,
+				9E4D35541F42495C00186A6A /* WeatherTableViewCell.swift in Sources */,
 				9E2247331F38F49400F60AD7 /* APIRequestManager.swift in Sources */,
 				9E20A9421F415B39007212E9 /* SettingsViewController.swift in Sources */,
 				9E4D35521F423F1200186A6A /* Error.swift in Sources */,
