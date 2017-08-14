@@ -50,27 +50,96 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="Bgu-dJ-3nt">
                         <nil key="title"/>
-                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="11101" borderStyle="roundedRect" placeholder="Enter Zip" textAlignment="natural" minimumFontSize="17" id="Pld-zs-nBn">
-                            <rect key="frame" x="112.5" y="7" width="150" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                        </textField>
                         <barButtonItem key="rightBarButtonItem" title="🔄℉" id="Zsy-nu-kRz">
                             <connections>
                                 <action selector="tempToggleButtonPressed:" destination="yHC-lw-vBF" id="bk7-So-Awd"/>
+                                <segue destination="DOk-IM-l5Z" kind="presentation" identifier="settingsSegue" id="uJD-Xe-6yu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tempToggleButton" destination="Zsy-nu-kRz" id="I7f-h8-LMp"/>
-                        <outlet property="zipCodeField" destination="Pld-zs-nBn" id="gTK-Qg-6nF"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CVI-Vc-cUu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1236" y="-223.53823088455775"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="bxd-rt-mSR">
+            <objects>
+                <viewController id="DOk-IM-l5Z" customClass="SettingsViewController" customModule="C4QWeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wjh-g2-Yx0"/>
+                        <viewControllerLayoutGuide type="bottom" id="j0H-zN-xUg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="67X-pz-KG6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWI-Ve-bG3">
+                                <rect key="frame" x="155.5" y="44" width="64" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IBJ-Vq-MIP">
+                                <rect key="frame" x="112.5" y="113" width="150" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="rNW-hw-dDn"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Fahrenheit"/>
+                                    <segment title="Celcius"/>
+                                </segments>
+                                <connections>
+                                    <action selector="conversionPickerTapped:" destination="DOk-IM-l5Z" eventType="valueChanged" id="TBf-ei-sfB"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zip Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqx-EA-BHe">
+                                <rect key="frame" x="152.5" y="198" width="70" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbw-Yo-BVi">
+                                <rect key="frame" x="167.5" y="317" width="40" height="30"/>
+                                <state key="normal" title="Apply"/>
+                                <connections>
+                                    <action selector="applyButtonTapped:" destination="DOk-IM-l5Z" eventType="touchUpInside" id="9oX-ru-Lu0"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Zip Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ALl-P6-W7Y">
+                                <rect key="frame" x="112.5" y="227" width="150" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fbw-Yo-BVi" firstAttribute="top" secondItem="ALl-P6-W7Y" secondAttribute="bottom" constant="60" id="2Ag-SZ-Etf"/>
+                            <constraint firstItem="IBJ-Vq-MIP" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="2kJ-en-DPe"/>
+                            <constraint firstItem="ALl-P6-W7Y" firstAttribute="top" secondItem="fqx-EA-BHe" secondAttribute="bottom" constant="8" id="BGB-Vq-rJ1"/>
+                            <constraint firstItem="fqx-EA-BHe" firstAttribute="top" secondItem="IBJ-Vq-MIP" secondAttribute="bottom" constant="57" id="BQ6-Af-AsS"/>
+                            <constraint firstItem="wWI-Ve-bG3" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="GcA-Zf-lXp"/>
+                            <constraint firstItem="ALl-P6-W7Y" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="J0b-ZJ-UpX"/>
+                            <constraint firstItem="fbw-Yo-BVi" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="J5y-SL-3DD"/>
+                            <constraint firstItem="fqx-EA-BHe" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="e4y-r6-Tt7"/>
+                            <constraint firstItem="wWI-Ve-bG3" firstAttribute="top" secondItem="Wjh-g2-Yx0" secondAttribute="bottom" constant="24" id="fok-bI-VGM"/>
+                            <constraint firstItem="IBJ-Vq-MIP" firstAttribute="top" secondItem="wWI-Ve-bG3" secondAttribute="bottom" constant="48" id="i75-iA-p7D"/>
+                            <constraint firstItem="ALl-P6-W7Y" firstAttribute="width" secondItem="IBJ-Vq-MIP" secondAttribute="width" id="isf-Ir-QIa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="applyButton" destination="fbw-Yo-BVi" id="jgT-SU-gJn"/>
+                        <outlet property="conversionPicker" destination="IBJ-Vq-MIP" id="CAP-ud-92c"/>
+                        <outlet property="zipCodeTextField" destination="ALl-P6-W7Y" id="mJc-hS-jnq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PwM-p3-klA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2149.5999999999999" y="-224.4377811094453"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0hf-I1-e2M">

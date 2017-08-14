@@ -16,18 +16,19 @@ class WeatherTableViewController: UITableViewController {
     var validZip = Bool()
     var weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9"
     let reuseIdentifier = "weatherReuseID"
+    let segueIdentifier = "settingsSegue"
     var forecast = [Weather]()
     var tempToggle = true
     
+    // MARK: Functions and Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        zipCodeField.delegate = self
         getTheWeather(for: zipCode)
     }
     
-    // MARK: Functions and Methods
-    @IBAction func tempToggleButtonPressed(_ sender: UIBarButtonItem) {
-        toggleTempButtonPressed()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.title = "Forecast for \(zipCode)"
     }
     
     func getTheWeather(for zipCode: String) {
@@ -37,7 +38,7 @@ class WeatherTableViewController: UITableViewController {
                 self.validZip = validWeather.1!
                 DispatchQueue.main.async {
                     if !self.validZip {
-                        self.presentErrorMessage()
+                        presentErrorMessage(zipCode, view: self)
                     }
                     self.tableView.reloadData()
                 }
@@ -45,19 +46,12 @@ class WeatherTableViewController: UITableViewController {
         }
     }
     
-    func presentErrorMessage() {
-        let alertController = UIAlertController(title: "Error", message: "\(zipCode) is not a valid zip code!", preferredStyle: .alert)
-        
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
     func dateStringToReadableString(_ dateString: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let date = dateFormatter.date(from: dateString)
         let newFormatter = DateFormatter()
-        newFormatter.dateFormat = "MMM d, yyyy"
+        newFormatter.dateFormat = "EEEE, MMMM d, yyyy"
         if let date = date {
             return newFormatter.string(from: date)
         } else {
@@ -65,8 +59,7 @@ class WeatherTableViewController: UITableViewController {
         }
     }
     
-    func toggleTempButtonPressed() {
-        tempToggle = !tempToggle
+    func checkTempToggleForButtonIcon() {
         if tempToggle {
             tempToggleButton.title = "🔄℉"
         } else {
@@ -90,25 +83,29 @@ class WeatherTableViewController: UITableViewController {
         cell.textLabel?.text = "High: \(tempToggle ? "\(forecastAtRow.maxTempF)℉" : "\(forecastAtRow.maxTempC)℃"), Low: \(tempToggle ? "\(forecastAtRow.minTempF)℉" : "\(forecastAtRow.minTempC)℃")"
         return cell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == segueIdentifier {
+            let vc = segue.destination as! SettingsViewController
+            vc.delegate = self
+            vc.zipCode = zipCode
+            vc.tempToggle = tempToggle
+        }
+    }
 }
 
-
-extension WeatherTableViewController: UITextFieldDelegate {
-    // MARK: - UITextField Stuff
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let search = textField.text {
-            zipCode = search
-            if search.characters.count == 5 {
-                getTheWeather(for: search)
-            } else {
-                presentErrorMessage()
-            }
+extension WeatherTableViewController: SettingsDelegate {
+    func changeSettings(_ controller: SettingsViewController, _ zip: String, _ temp: Bool) {
+        if zip != zipCode {
+            zipCode = zip
+            getTheWeather(for: zip)
         }
-        textField.resignFirstResponder()
-        return true
+        
+        if temp != tempToggle {
+            tempToggle = temp
+            checkTempToggleForButtonIcon()
+        }
+        
+        controller.dismiss(animated: true, completion: nil)
     }
 }
