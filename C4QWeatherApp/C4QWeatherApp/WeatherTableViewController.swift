@@ -12,7 +12,8 @@ class WeatherTableViewController: UITableViewController {
     // MARK: Properties and Outlets
     @IBOutlet weak var zipCodeField: UITextField!
     @IBOutlet weak var tempToggleButton: UIBarButtonItem!
-    
+
+    let defaults = UserDefaults.standard
     var zipCode = "11101"
     var validZip = Bool()
     var weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9"
@@ -24,6 +25,9 @@ class WeatherTableViewController: UITableViewController {
     // MARK: Functions and Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let defaultZip = defaults.string(forKey: "Location") {
+            zipCode = defaultZip
+        }
         getTheWeather(for: zipCode)
     }
     
@@ -99,6 +103,7 @@ extension WeatherTableViewController: SettingsDelegate {
     func changeSettings(_ controller: SettingsViewController, _ zip: String, _ temp: Bool) {
         if zip != zipCode {
             zipCode = zip
+            defaults.set(zip, forKey: "Location")
             getTheWeather(for: zip)
         }
         if temp != tempToggle {
