@@ -12,7 +12,7 @@ enum WeatherModelParseError: Error {
     case results, parsing
 }
 
-class Weather {
+class Weather: NSObject, NSCoding {
     let date: String
     let minTempF: Int
     let maxTempF: Int
@@ -27,8 +27,7 @@ class Weather {
          minTempC: Int,
          maxTempC: Int,
          icon: String,
-         weather: String)
-    {
+         weather: String) {
         self.date = date
         self.maxTempF = maxTempF
         self.minTempF = minTempF
@@ -56,9 +55,38 @@ class Weather {
                   weather: weather)
     }
     
+    required convenience init?(coder aDecoder: NSCoder) {
+        let date = aDecoder.decodeObject(forKey: "date") as! String
+        let minTempF = aDecoder.decodeInteger(forKey: "minTempF")
+        let maxTempF = aDecoder.decodeInteger(forKey: "maxTempF")
+        let minTempC = aDecoder.decodeInteger(forKey: "minTempC")
+        let maxTempC = aDecoder.decodeInteger(forKey: "maxTempC")
+        let icon = aDecoder.decodeObject(forKey: "icon") as! String
+        let weather = aDecoder.decodeObject(forKey: "weather") as! String
+        
+        self.init(date: date,
+                  minTempF: minTempF,
+                  maxTempF: maxTempF,
+                  minTempC: minTempC,
+                  maxTempC: maxTempC,
+                  icon: icon,
+                  weather: weather)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(date, forKey: "date")
+        aCoder.encode(minTempF, forKey: "minTempF")
+        aCoder.encode(maxTempF, forKey: "maxTempF")
+        aCoder.encode(minTempC, forKey: "minTempC")
+        aCoder.encode(maxTempC, forKey: "maxTempC")
+        aCoder.encode(icon, forKey: "icon")
+        aCoder.encode(weather, forKey: "weather")
+    }
+    
     static func getWeather(from data: Data) -> ([Weather]?, Bool?)? {
         var weatherToReturn: [Weather]? = []
         var successBool: Bool?
+        
         do {
             let jsonData: Any = try JSONSerialization.jsonObject(with: data, options: [])
             
@@ -91,6 +119,7 @@ class Weather {
         return (weatherToReturn, successBool)
     }
 }
+
 
 
 //Verify that you are able to obtain a JSON response from the API, and familiarize yourself with the JSON results. You will need the minTempF and maxTempF fields for low and high temperatures, and dateTimeISO field for the forecast date.

@@ -13,10 +13,10 @@ class WeatherTableViewController: UITableViewController {
     @IBOutlet weak var zipCodeField: UITextField!
     @IBOutlet weak var tempToggleButton: UIBarButtonItem!
 
-    let defaults = UserDefaults.standard
+    let userDefaults = UserDefaults.standard
     var zipCode = "11101"
     var validZip = Bool()
-    var weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9"
+    var weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9" //note to self, change secret and delete this before showing people
     let reuseIdentifier = "weatherReuseID"
     let segueIdentifier = "settingsSegue"
     var forecast = [Weather]()
@@ -25,9 +25,10 @@ class WeatherTableViewController: UITableViewController {
     // MARK: Functions and Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let defaultZip = defaults.string(forKey: "Location") {
+        if let defaultZip = userDefaults.string(forKey: "Location") {
             zipCode = defaultZip
         }
+        loadPreviousWeather()
         getTheWeather(for: zipCode)
     }
     
@@ -41,13 +42,25 @@ class WeatherTableViewController: UITableViewController {
             if let validData = data, let validWeather = Weather.getWeather(from: validData) {
                 self.forecast = validWeather.0!
                 self.validZip = validWeather.1!
+                
                 DispatchQueue.main.async {
                     if !self.validZip {
                         presentErrorMessage(zipCode, view: self)
                     }
+                    
+                    let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.forecast)
+                    self.userDefaults.set(encodedData, forKey: "forecast")
+                    self.userDefaults.synchronize()
+                    
                     self.tableView.reloadData()
                 }
             }
+        }
+    }
+    
+    func loadPreviousWeather() {
+        if let previousWeather = userDefaults.object(forKey: "forecast") as? Data {
+            self.forecast = NSKeyedUnarchiver.unarchiveObject(with: previousWeather) as! [Weather]
         }
     }
     
@@ -57,6 +70,7 @@ class WeatherTableViewController: UITableViewController {
         let date = dateFormatter.date(from: dateString)
         let newFormatter = DateFormatter()
         newFormatter.dateFormat = "EEEE, MMMM d, yyyy"
+        
         if let date = date {
             return newFormatter.string(from: date)
         } else {
@@ -103,7 +117,7 @@ extension WeatherTableViewController: SettingsDelegate {
     func changeSettings(_ controller: SettingsViewController, _ zip: String, _ temp: Bool) {
         if zip != zipCode {
             zipCode = zip
-            defaults.set(zip, forKey: "Location")
+            userDefaults.set(zip, forKey: "Location")
             getTheWeather(for: zip)
         }
         if temp != tempToggle {
