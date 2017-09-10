@@ -25,9 +25,11 @@ class WeatherTableViewController: UITableViewController {
     var tempToggle = true
     var loadedDate: String?
     
-    // MARK: Functions and Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 140
         self.refreshControl?.addTarget(self, action: #selector(WeatherTableViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
         loadDefaults()
         getTheWeather(for: zipCode)
@@ -38,6 +40,7 @@ class WeatherTableViewController: UITableViewController {
         self.title = "Forecast for \(zipCode)"
     }
     
+    // MARK: Functions and Methods
     func handleRefresh(_ refreshControl: UIRefreshControl) {
         getTheWeather(for: zipCode)
         refreshControl.endRefreshing()
