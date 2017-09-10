@@ -6,7 +6,9 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,14 +29,32 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HuT-1M-7lA">
-                                            <rect key="frame" x="8" y="21" width="60" height="60"/>
+                                            <rect key="frame" x="8" y="17.5" width="67.5" height="67"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="60" id="DQa-NR-ioI"/>
-                                                <constraint firstAttribute="width" constant="60" id="RzA-W8-Eqq"/>
+                                                <constraint firstAttribute="width" constant="70" id="RzA-W8-Eqq"/>
+                                                <constraint firstAttribute="width" secondItem="HuT-1M-7lA" secondAttribute="height" multiplier="1:1" id="m1M-jb-0V0"/>
+                                                <constraint firstAttribute="width" constant="133.5" id="y80-dm-KPm">
+                                                    <variation key="heightClass=compact" constant="70"/>
+                                                </constraint>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="y80-dm-KPm"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="y80-dm-KPm"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact">
+                                                <mask key="constraints">
+                                                    <exclude reference="RzA-W8-Eqq"/>
+                                                </mask>
+                                            </variation>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mp4-Bh-rmM">
-                                            <rect key="frame" x="76" y="8" width="283" height="15"/>
+                                            <rect key="frame" x="83.5" y="8" width="275.5" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="14.5" id="M7F-K5-WZu"/>
                                             </constraints>
@@ -43,7 +63,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2BL-Gq-FT1">
-                                            <rect key="frame" x="76" y="26.5" width="283" height="48.5"/>
+                                            <rect key="frame" x="83.5" y="26.5" width="275.5" height="48.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14.5" id="zSJ-Tb-7uw"/>
                                             </constraints>
@@ -52,7 +72,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High Low Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzs-BW-ep9">
-                                            <rect key="frame" x="76" y="79" width="283" height="15"/>
+                                            <rect key="frame" x="83.5" y="79" width="275.5" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="14.5" id="jyK-Bf-Sr7"/>
                                             </constraints>
@@ -72,9 +92,25 @@
                                         <constraint firstItem="dzs-BW-ep9" firstAttribute="leading" secondItem="HuT-1M-7lA" secondAttribute="trailing" constant="8" id="YWk-oE-ehS"/>
                                         <constraint firstItem="dzs-BW-ep9" firstAttribute="top" secondItem="2BL-Gq-FT1" secondAttribute="bottom" constant="4" id="bEC-KM-ibC"/>
                                         <constraint firstItem="HuT-1M-7lA" firstAttribute="centerY" secondItem="WLa-dg-9bV" secondAttribute="centerY" id="dOB-cB-IFb"/>
+                                        <constraint firstItem="HuT-1M-7lA" firstAttribute="width" secondItem="WLa-dg-9bV" secondAttribute="width" multiplier="0.18" id="hiG-DI-wEi"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="2BL-Gq-FT1" secondAttribute="trailing" constant="8" id="tiv-8R-IGZ"/>
                                         <constraint firstItem="mp4-Bh-rmM" firstAttribute="top" secondItem="WLa-dg-9bV" secondAttribute="topMargin" id="x4j-7s-HkT"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="hiG-DI-wEi"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="constraints">
+                                            <include reference="hiG-DI-wEi"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="heightClass=compact-widthClass=compact">
+                                        <mask key="constraints">
+                                            <exclude reference="hiG-DI-wEi"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="dateLabel" destination="mp4-Bh-rmM" id="y9l-VS-Qpq"/>
@@ -148,7 +184,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="IBJ-Vq-MIP">
-                                <rect key="frame" x="112" y="113" width="150" height="29"/>
+                                <rect key="frame" x="112.5" y="113" width="150" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="rNW-hw-dDn"/>
                                 </constraints>
