@@ -13,14 +13,13 @@ class WeatherTableViewController: UITableViewController {
     @IBOutlet weak var zipCodeField: UITextField!
     @IBOutlet weak var tempToggleButton: UIBarButtonItem!
     
-    var weatherAPIURL = "http://api.aerisapi.com/forecasts/11101?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9" //note to self, change secret and delete this before showing people
+    let userDefaults = UserDefaults.standard
     let reuseIdentifier = "weatherReuseID"
     let segueIdentifier = "settingsSegue"
     let dateFormatter = DateFormatter()
-    let userDefaults = UserDefaults.standard
+    var validZip = Bool()
     
     // Possible defaults
-    var validZip = Bool()
     var zipCode = "11101"
     var forecast = [Weather]()
     var tempToggle = true
