@@ -28,6 +28,7 @@ class WeatherTableViewController: UITableViewController {
     // MARK: Functions and Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.refreshControl?.addTarget(self, action: #selector(WeatherTableViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
         loadDefaults()
         getTheWeather(for: zipCode)
     }
@@ -37,17 +38,27 @@ class WeatherTableViewController: UITableViewController {
         self.title = "Forecast for \(zipCode)"
     }
     
+    func handleRefresh(_ refreshControl: UIRefreshControl) {
+        getTheWeather(for: zipCode)
+        refreshControl.endRefreshing()
+    }
+    
     func loadDefaults() {
         if let defaultZip = userDefaults.string(forKey: "Location") {
             zipCode = defaultZip
         }
         
         if let previousWeather = userDefaults.object(forKey: "forecast") as? Data {
-            self.forecast = NSKeyedUnarchiver.unarchiveObject(with: previousWeather) as! [Weather]
+            forecast = NSKeyedUnarchiver.unarchiveObject(with: previousWeather) as! [Weather]
         }
         
         if let previousDate = userDefaults.object(forKey: "lastUpdated") as? String {
-            self.loadedDate = previousDate
+            loadedDate = previousDate
+        }
+        
+        if let tempConversion = userDefaults.object(forKey: "tempToggle") as? Bool {
+            tempToggle = tempConversion
+            checkTempToggleForButtonIcon()
         }
     }
     
@@ -142,10 +153,13 @@ extension WeatherTableViewController: SettingsDelegate {
             userDefaults.set(zip, forKey: "Location")
             getTheWeather(for: zip)
         }
+        
         if temp != tempToggle {
             tempToggle = temp
+            self.userDefaults.set(temp, forKey: "tempToggle")
             checkTempToggleForButtonIcon()
         }
+        
         controller.dismiss(animated: true, completion: nil)
     }
 }
