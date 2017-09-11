@@ -6,7 +6,6 @@
 //  Copyright © 2017 Victor Zhong. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 func presentErrorMessage(_ zipCode: String, view viewController: UIViewController) {
