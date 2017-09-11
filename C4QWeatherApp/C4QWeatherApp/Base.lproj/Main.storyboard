@@ -196,6 +196,13 @@
                                     <action selector="conversionPickerTapped:" destination="DOk-IM-l5Z" eventType="valueChanged" id="TBf-ei-sfB"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYs-Tq-SRm">
+                                <rect key="frame" x="132.5" y="265" width="109" height="30"/>
+                                <state key="normal" title="Detect Location"/>
+                                <connections>
+                                    <action selector="detectLocationButtonTapped:" destination="DOk-IM-l5Z" eventType="touchUpInside" id="6Ez-Jq-Nkh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -206,6 +213,8 @@
                             <constraint firstItem="wWI-Ve-bG3" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="GcA-Zf-lXp"/>
                             <constraint firstItem="ALl-P6-W7Y" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="J0b-ZJ-UpX"/>
                             <constraint firstItem="fbw-Yo-BVi" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="J5y-SL-3DD"/>
+                            <constraint firstItem="rYs-Tq-SRm" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="Vtm-St-3p6"/>
+                            <constraint firstItem="rYs-Tq-SRm" firstAttribute="top" secondItem="ALl-P6-W7Y" secondAttribute="bottom" constant="8" id="bo1-3D-Lav"/>
                             <constraint firstItem="fqx-EA-BHe" firstAttribute="centerX" secondItem="67X-pz-KG6" secondAttribute="centerX" id="e4y-r6-Tt7"/>
                             <constraint firstItem="wWI-Ve-bG3" firstAttribute="top" secondItem="Wjh-g2-Yx0" secondAttribute="bottom" constant="24" id="fok-bI-VGM"/>
                             <constraint firstItem="IBJ-Vq-MIP" firstAttribute="top" secondItem="wWI-Ve-bG3" secondAttribute="bottom" priority="250" constant="48" id="i75-iA-p7D"/>
