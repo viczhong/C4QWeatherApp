@@ -7,4 +7,6 @@ Future implementation:
 - Forecast at user location
 - Debugging: Check to see whether the zip code is in correct format instead of using API call to determine if the search is successful.
 
-![screenshot](https://github.com/viczhong/C4QWeatherApp/blob/master/images/Screenshot.png "Screenshot")
+Main Screen|Settings
+---|---
+![screenshot](https://github.com/viczhong/C4QWeatherApp/blob/master/images/Screenshot.png "Main Screen")|![screenshot](https://github.com/viczhong/C4QWeatherApp/blob/master/images/Screenshot1.png "Settings")
