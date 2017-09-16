@@ -31,6 +31,7 @@ class SettingsViewController: UIViewController {
         displayTemp()
         zipCodeTextField.delegate = self
         zipCodeTextField.text = zipCode
+        startCheckingLocation(locationManager)
     }
     
     @IBAction func applyButtonTapped(_ sender: Any) {
@@ -38,7 +39,6 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func detectLocationButtonTapped(_ sender: Any) {
-        startCheckingLocation(locationManager)
         findLocation(locationManager, didUpdateLocations: locations)
     }
     
