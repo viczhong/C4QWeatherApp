@@ -81,7 +81,7 @@ class WeatherTableViewController: UITableViewController {
                 
                 DispatchQueue.main.async {
                     if !self.validZip {
-                        presentErrorMessage(zipCode, view: self)
+                        presentErrorMessage(zipCode, type: .zipCode, view: self)
                     }
                     
                     let encodedData = NSKeyedArchiver.archivedData(withRootObject: self.forecast)
