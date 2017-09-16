@@ -29,8 +29,6 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow C4QWeather to detect your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow C4QWeather to detect your zip code</string>
 	<key>UIRequiredDeviceCapabilities</key>
