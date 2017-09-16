@@ -31,6 +31,7 @@ class SettingsViewController: UIViewController {
         displayTemp()
         zipCodeTextField.delegate = self
         zipCodeTextField.text = zipCode
+        startCheckingLocation(locationManager)
     }
     
     @IBAction func applyButtonTapped(_ sender: Any) {
@@ -38,12 +39,10 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func detectLocationButtonTapped(_ sender: Any) {
-        startCheckingLocation(locationManager)
         findLocation(locationManager, didUpdateLocations: locations)
     }
     
     @IBAction func conversionPickerTapped(_ sender: UISegmentedControl) {
-        
         if sender.selectedSegmentIndex == 0 {
             tempToggle = true
         } else {
@@ -70,7 +69,7 @@ extension SettingsViewController: UITextFieldDelegate {
         if let search = textField.text {
             zipCode = search
             if search.characters.count != 5 {
-                presentErrorMessage(search, view: self)
+                presentErrorMessage(search, type: .zipCode, view: self)
             }
         }
         
@@ -81,7 +80,6 @@ extension SettingsViewController: UITextFieldDelegate {
 
 extension SettingsViewController: CLLocationManagerDelegate {
     func startCheckingLocation(_ locationManager: CLLocationManager) {
-        locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
@@ -92,6 +90,7 @@ extension SettingsViewController: CLLocationManagerDelegate {
     }
     
     func findLocation(_ manager: CLLocationManager, didUpdateLocations location: [CLLocation]) {
+        
         if let location = manager.location {
             CLGeocoder().reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
                 if let placemarks = placemarks {
@@ -101,13 +100,18 @@ extension SettingsViewController: CLLocationManagerDelegate {
                             self.zipCodeTextField.text = pm
                         }
                     }
+                    
+                    manager.stopUpdatingLocation()
                 }
+                
                 
                 if let error = error {
                     print("Error during location session: \(error.localizedDescription)")
                     return
                 }
             })
+        } else {
+             presentErrorMessage("Please Enable Location Services for C4Q Weather in Settings", type: .string, view: self)
         }
     }
 }
