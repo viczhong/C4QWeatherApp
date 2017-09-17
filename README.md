@@ -1,4 +1,4 @@
-# C4QWeatherApp
+# C4Q Weather App
 
 Currently has basic zip code search functions, in addition to minimum viable product of weekly forecast of highs and lows in both ℉ and ℃. Feel free to check out PostCommitFixes branch to see extra work to improve user QoL.
 
