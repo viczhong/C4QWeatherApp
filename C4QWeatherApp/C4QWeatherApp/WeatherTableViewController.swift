@@ -41,7 +41,7 @@ class WeatherTableViewController: UITableViewController {
     }
     
     // MARK: Functions and Methods
-    func handleRefresh(_ refreshControl: UIRefreshControl) {
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         getTheWeather(for: zipCode)
         refreshControl.endRefreshing()
     }
