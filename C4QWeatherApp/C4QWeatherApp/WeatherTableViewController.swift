@@ -12,7 +12,13 @@ class WeatherTableViewController: UITableViewController {
     // MARK: Properties and Outlets
     @IBOutlet weak var zipCodeField: UITextField!
     @IBOutlet weak var tempToggleButton: UIBarButtonItem!
-    
+
+    // ATTENTION
+    // Plug in your client ID and client secret from Aeris
+    // https://www.aerisweather.com/support/docs/api/
+    let clientID = ""
+    let clientSecret = ""
+
     let userDefaults = UserDefaults.standard
     let reuseIdentifier = "weatherReuseID"
     let segueIdentifier = "settingsSegue"
@@ -66,7 +72,7 @@ class WeatherTableViewController: UITableViewController {
     }
     
     func getTheWeather(for zipCode: String) {
-        APIRequestManager.manager.getData(endPoint: "http://api.aerisapi.com/forecasts/\(zipCode)?client_id=0tb9dn2PHqjXxZHmGw998&client_secret=GSgql9ruHQOcuMJAREik3PuiXZYoVQXR1OUI6La9", callback: { (data: Data?, error: Error?) in
+        APIRequestManager.manager.getData(endPoint: "http://api.aerisapi.com/forecasts/\(zipCode)?client_id=\(clientID)&client_secret=\(clientSecret)", callback: { (data: Data?, error: Error?) in
             if error == nil {
                 let currentTime = Date()
                 self.dateFormatter.dateFormat = "MMM d, h:mm a"
